@@ -1,0 +1,38 @@
+.container {
+	opacity: .9;
+}
+
+.wrapper {
+	min-height: 1080px;
+	background-image: url("../images/backgrounds/background11.jpg");
+}
+
+#footerDiv {
+	height: 50px;
+	padding-top: 15px;
+	background-color: #222;
+	color: #ccc;
+}
+
+#leftLogo {
+	display: block;
+	height: 150px;
+}
+
+#rightLogo {
+	display: block;
+	height: 150px;
+}
+
+#headerTitle {
+	margin-top: 30px;
+	color: yellow;
+	float: right;
+}
+
+h1 {
+	font-size: 52px;
+	font-weight: 800;
+	text-shadow: 2px 2px #ff0000;
+}
+
