@@ -340,6 +340,7 @@ function nextQuestion() {
 function outOfTime() {
 	clearScreen();
 	$("#questionSection").html("<h1>Noooooo! You ran out of time.</h1><br><h2>You gotta be quicker than that!</h2>");
+	$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
 	window.setTimeout(checkAnswer, 5000);
 }
 
