@@ -1,17 +1,35 @@
+h1 {
+	font-size: 52px;
+	font-weight: 800;
+	text-shadow: 2px 2px #ff0000;
+}
+
 .container {
 	opacity: .9;
 }
 
+.options {
+	height: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .wrapper {
-	min-height: 1080px;
 	background-image: url("../images/backgrounds/background11.jpg");
+	min-height: 1080px;
 }
 
 #footerDiv {
-	height: 50px;
-	padding-top: 15px;
 	background-color: #222;
 	color: #ccc;
+	height: 50px;
+	padding-top: 15px;
+}
+
+#headerTitle {
+	color: yellow;
+	float: right;
+	margin-top: 30px;
 }
 
 #leftLogo {
@@ -19,20 +37,31 @@
 	height: 150px;
 }
 
+#questionSection {
+	text-align: center;
+}
+
 #rightLogo {
 	display: block;
 	height: 150px;
 }
 
-#headerTitle {
-	margin-top: 30px;
-	color: yellow;
-	float: right;
+#scoreCorrectSection {
+	text-align: center;
 }
 
-h1 {
-	font-size: 52px;
-	font-weight: 800;
-	text-shadow: 2px 2px #ff0000;
+#scoreSection {
+	background-color: #CCC;
 }
+
+#scoreWrongSection {
+	text-align: center;
+}
+
+#timerSection {
+	color: red;
+	font-size: 24px;
+	text-align: center;
+}
+
 
