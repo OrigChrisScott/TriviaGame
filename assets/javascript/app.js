@@ -234,7 +234,6 @@ var scoreWrong = 0;
 var currentTimer = null;
 
 
-
 // <---- *** Need to write [current version has hard-coded HTML]
 // Sets HTML for chosen game and pulls data from game's object
 function chooseGame(game) {
@@ -260,12 +259,6 @@ function chooseGame(game) {
 	};
 
 	starGame();
-}
-
-// Generates random number between min and max arguments and returns value
-function getRandomNumber (min, max) {
-	var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-	return randomNum;
 }
 
 // Generates a randomized question array
@@ -300,6 +293,12 @@ function makeQuestionBank(game) {
 		var index = indexArray[j];
 		orderedArray[j] = gameChosen[index];
 	}
+
+	// Generates random number between min and max arguments and returns value
+	function getRandomNumber (min, max) {
+		var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+		return randomNum;
+	}
 }
 
 // Checks for remaining questions and displays them in the main section
@@ -319,7 +318,7 @@ function nextQuestion() {
 		
 		questionsRemaining -= 1;
 		// Pass length of timer and function to execute on expiration of time
-		setTimer(30, outOfTime, true);
+		setTimer(8, outOfTime, true);
 
 	} else {
 		endGame();
@@ -351,48 +350,19 @@ function setTimer(length, callback, displayTime) {
 	}, 1000);
 }
 
-function wrongAnswer() {
-	clearScreen();
-
-	$("#questionSection").html("<h1>Oops, that answer was incorrect!</h1><br><h2>You might need to brush up on your Simpsons episodes.</h2>");
-	$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
-}
-
-function correctAnswer() {
-	clearScreen();
-
-	if (questionsRemaining > 0) {
-		if (scoreCorrect > 15) {
-			string = "You are clearly well versed on The Simpsons.<br>We might need to made these question a little harder.";
-		} else if (scoreCorrect > 12) {
-			string = "You are doing great, keep going!";
-		} else if (scoreCorrect > 6) {
-			string = "Decent job so far.";
-		} else if (scoreCorrect > 3) {
-			string = "Okay, you've watched the Simpsons a time or two.&nbsp;&nbsp;Respectable.";
-		} else {
-			string = "Probably just a lucky guess.";
-		}
-
-		$("#questionSection").html("<h1>Correct!</h1><br><h2>" + string + "</h2>");
-		$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
-	
-	} else {
-
-		$("#questionSection").html("<h1>You made it through the quiz!</h1><br><h2>Stay tuned for your final score.</h2>");
-	
-	}
-}
-
 // Runs when player does not answer within the alloted time
 function outOfTime() {
 	clearScreen();
+	clearInterval(currentTimer);
+	setTimer(3, nextQuestion, false);
 	$("#questionSection").html("<h1>Noooooo! You ran out of time.</h1><br><h2>You gotta be quicker than that!</h2>");
 	$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
-	window.setTimeout(checkAnswer, 5000);
+	scoreWrong += 1;
+	displayScore();
 }
 
-// Checks user input answer against correct answer. Increments score, clears screen, and starts next question
+// Checks answer from player input against correct answer.
+// Increments score, clears screen, displays correct answer and starts next question
 function checkAnswer(answer) {
 	clearInterval(currentTimer);
 	$("#timerSection").html("");
@@ -408,6 +378,41 @@ function checkAnswer(answer) {
 
 	orderedArray.shift();
 	displayScore();
+
+	// Check for wrong answer, displays correct answer to player
+	function wrongAnswer() {
+		clearScreen();
+
+		$("#questionSection").html("<h1>Oops, that answer was incorrect!</h1><br><h2>You might need to brush up on your Simpsons episodes.</h2>");
+		$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
+	}
+
+	// Check for correct answer, displays statement based on current score and correct answer
+	function correctAnswer() {
+		clearScreen();
+
+		if (questionsRemaining > 0) {
+			if (scoreCorrect > 15) {
+				string = "You are clearly well versed on The Simpsons.<br>We might need to made these question a little harder.";
+			} else if (scoreCorrect > 12) {
+				string = "You are doing great, keep going!";
+			} else if (scoreCorrect > 6) {
+				string = "Decent job so far.";
+			} else if (scoreCorrect > 3) {
+				string = "Okay, you've watched the Simpsons a time or two.&nbsp;&nbsp;Respectable.";
+			} else {
+				string = "Probably just a lucky guess.";
+			}
+
+			$("#questionSection").html("<h1>Correct!</h1><br><h2>" + string + "</h2>");
+			$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
+		
+		} else {
+
+			$("#questionSection").html("<h1>You made it through the quiz!</h1><br><h2>Stay tuned for your final score.</h2>");
+		
+		}
+	}
 }
 
 // Displays current scores
@@ -426,6 +431,16 @@ function startGame() {
 	nextQuestion();
 }
 
+// Displays stats at game end.  New game auto starts after 5 seconds with page refresh
+function endGame() {
+	var scoreTotal = scoreCorrect + scoreWrong;
+	var string = "<h2>You Finished The Game!</h2><br>";
+	string += "<h4>You correctly guessed " + scoreCorrect + " out of " + scoreTotal + "<br><br>";
+	string += "That is " + (scoreCorrect/scoreTotal*100) + "%";
+	$("#questionSection").html(string);
+	currentTimer = setInterval(startGame, 5000);
+}
+
 // Clears main content screen
 function clearScreen() {
 	$("#questionSection").html("");
@@ -439,15 +454,6 @@ function resetValues() {
 	scoreWrong = 0;
 }
 
-// Displays stats at game end.  New game auto starts after 5 seconds with page refresh
-function endGame() {
-	var scoreTotal = scoreCorrect + scoreWrong;
-	var string = "<h2>You Finished The Game!</h2><br>";
-	string += "<h4>You correctly guessed " + scoreCorrect + " out of " + scoreTotal + "<br><br>";
-	string += "That is " + (scoreCorrect/scoreTotal*100) + "%";
-	$("#questionSection").html(string);
-	currentTimer = setInterval(startGame, 5000);
-}
 
 
 
