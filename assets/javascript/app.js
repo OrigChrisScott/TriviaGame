@@ -308,17 +308,17 @@ function nextQuestion() {
 	clearScreen();
 
 	if (questionsRemaining > 0) {
-		var string = "<h2 class=\"col-lg-8 col-lg-offset-2\">" + orderedArray[0].question + "</h2>";
+		var string = "<h3 class=\"col-lg-8 col-lg-offset-2\">" + orderedArray[0].question + "</h3>";
 		$("#questionSection").html(string);
 
 		for (i = 0; i < orderedArray[0].options.length; i++) {
-			var string = "<button class=\"col-lg-8 col-lg-offset-2 options\" value=\"" + i + "\" onclick=\"checkAnswer(" + i + ")\">" + orderedArray[0].options[i] + "</button>";
+			var string = "<button class=\"col-xs-6 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 options\" value=\"" + i + "\" onclick=\"checkAnswer(" + i + ")\">" + orderedArray[0].options[i] + "</button>";
 			$("#optionsSection").append(string);
 		}
 		
 		questionsRemaining -= 1;
 		// Pass length of timer and function to execute on expiration of time
-		setTimer(8, outOfTime, true);
+		setTimer(3, outOfTime, true);
 
 	} else {
 		endGame();
@@ -355,8 +355,8 @@ function outOfTime() {
 	clearScreen();
 	clearInterval(currentTimer);
 	setTimer(3, nextQuestion, false);
-	$("#questionSection").html("<h1>Noooooo! You ran out of time.</h1><br><h2>You gotta be quicker than that!</h2>");
-	$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
+	$("#questionSection").html("<h2>Noooooo! You ran out of time.</h2><br><h3>You gotta be quicker than that!</h3>");
+	$("#optionsSection").append("<p>The correct answer was:</p><br><h3>" + orderedArray[0].answer + "</h3>");
 	scoreWrong += 1;
 	displayScore();
 }
@@ -366,7 +366,7 @@ function outOfTime() {
 function checkAnswer(answer) {
 	clearInterval(currentTimer);
 	$("#timerSection").html("");
-	setTimer(3, nextQuestion, false);
+	setTimer(1, nextQuestion, false);
 
 	if (orderedArray[0].options[answer] === orderedArray[0].answer) {
 		scoreCorrect += 1;
@@ -383,8 +383,8 @@ function checkAnswer(answer) {
 	function wrongAnswer() {
 		clearScreen();
 
-		$("#questionSection").html("<h1>Oops, that answer was incorrect!</h1><br><h2>You might need to brush up on your Simpsons episodes.</h2>");
-		$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
+		$("#questionSection").html("<h2>Oops, that answer was incorrect!</h2><br><h3>You might need to brush up on your Simpsons episodes.</h3>");
+		$("#optionsSection").html("<p>The correct answer was:</p><br><h3>" + orderedArray[0].answer + "</h3>");
 	}
 
 	// Check for correct answer, displays statement based on current score and correct answer
@@ -404,12 +404,12 @@ function checkAnswer(answer) {
 				string = "Probably just a lucky guess.";
 			}
 
-			$("#questionSection").html("<h1>Correct!</h1><br><h2>" + string + "</h2>");
-			$("#questionSection").append("<p>The correct answer was:</p><br><h2>" + orderedArray[0].answer + "</h2>");
+			$("#questionSection").html("<h2>Correct!</h2><br><h3>" + string + "</h3>");
+			$("#optionsSection").html("<p>The correct answer was:</p><br><h3>" + orderedArray[0].answer + "</h3>");
 		
 		} else {
 
-			$("#questionSection").html("<h1>You made it through the quiz!</h1><br><h2>Stay tuned for your final score.</h2>");
+			$("#questionSection").html("<h2>You made it through the quiz!</h2><br><h3>Stay tuned for your final score.</h3>");
 		
 		}
 	}
@@ -417,12 +417,13 @@ function checkAnswer(answer) {
 
 // Displays current scores
 function displayScore() {
-	$("#scoreCorrectSection").html("<h4>Answers Correct:</h4><br><h4>" + scoreCorrect + "</h4>");
-	$("#scoreWrongSection").html("<h4>Answers Incorrect:</h4><br><h4>" + scoreWrong + "</h4>");
+	$("#scoreCorrectSection").html("<h4>Correct Answers: " + scoreCorrect + "</h4>");
+	$("#scoreWrongSection").html("<h4>Incorrect Answers: " + scoreWrong + "</h4>");
 }
 
 // Generates question bank, sets questionsRemaining variable to # of questions in bank, displays score, fetches first question
 function startGame() {
+	gameOn = true;
 	clearInterval(currentTimer);
 	resetValues();
 	makeQuestionBank(gameChosen);
@@ -438,7 +439,9 @@ function endGame() {
 	string += "<h4>You correctly guessed " + scoreCorrect + " out of " + scoreTotal + "<br><br>";
 	string += "That is " + (scoreCorrect/scoreTotal*100) + "%";
 	$("#questionSection").html(string);
-	currentTimer = setInterval(startGame, 5000);
+	gameOn = false;
+	$("#scoreSection").append("<div class=\"col-xs-12 col-lg-3\" id=\"buttons\"<div>")
+	$("#buttons").html("<button class=\"btn btn-danger\" id=\"restartButton\" onclick=\"startGame()\">Restart Game</button>");
 }
 
 // Clears main content screen

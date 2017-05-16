@@ -1,11 +1,23 @@
 h1 {
-	font-size: 52px;
-	font-weight: 800;
+	font-size: 42px;
+	font-weight: 600;
 	text-shadow: 2px 2px #ff0000;
+}
+
+
+h2 {
+	font-size: 34px;
+	font-weight: 600;
+	text-shadow: 1px 1px #ff0000;
 }
 
 .container {
 	opacity: .9;
+}
+
+.jumbotron {
+	min-height: 600px;
+	padding: 10px;
 }
 
 .options {
@@ -28,33 +40,55 @@ h1 {
 
 #headerTitle {
 	color: yellow;
-	float: right;
-	margin-top: 30px;
+	
+	margin-top: 10px;
+	text-align: center;
 }
 
 #leftLogo {
 	display: block;
-	height: 150px;
+	height: 130px;
+}
+
+#optionsSection {
+	display: block;
+	min-height: 200px;
+	text-align: center;
 }
 
 #questionSection {
+	display: block;
+	min-height: 235px;
 	text-align: center;
+}
+
+#restartButton {
+	display: block;
+	margin-top: 0px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #rightLogo {
 	display: block;
-	height: 150px;
+	height: 130px;
 }
 
 #scoreCorrectSection {
+	margin-top: 5px;
+	padding: 10px;
 	text-align: center;
 }
 
 #scoreSection {
 	background-color: #CCC;
+	height: 100px;
+	margin: 10px;
 }
 
 #scoreWrongSection {
+	margin-top: 5px;
+	padding: 10px;
 	text-align: center;
 }
 
@@ -66,7 +100,56 @@ h1 {
 #timerSection {
 	color: red;
 	font-size: 24px;
+	min-height: 50px;
 	text-align: center;
 }
 
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 980px) {
+	#optionsSection {
+		display: block;
+		min-height: 310px;
+		text-align: center;
+	}
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1180px) {
+	#optionsSection {
+		display: block;
+		min-height: 350px;
+		text-align: center;
+	}
+
+	#questionSection {
+		display: block;
+		min-height: 300px;
+		text-align: center;
+	}
+
+	#restartButton {
+		display: block;
+		margin-top: 25px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	#scoreSection {
+		background-color: #CCC;
+		height: 80px;
+		margin: 10px;
+	}
+
+	#scoreCorrectSection {
+		margin-top: 10px;
+		padding: 10px;
+		text-align: center;
+	}
+
+	#scoreWrongSection {
+		margin-top: 10px;
+		padding: 10px;
+		text-align: center;
+	}
+}
 
