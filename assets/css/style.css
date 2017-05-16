@@ -58,6 +58,11 @@ h1 {
 	text-align: center;
 }
 
+#timerLabel {
+	font-size: 18px;
+	text-align: center;
+}
+
 #timerSection {
 	color: red;
 	font-size: 24px;
